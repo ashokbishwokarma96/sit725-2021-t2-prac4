@@ -24,6 +24,7 @@ const submitForm = () => {
   formData.email = $("#email").val();
 
   console.log("Form Data Submitted: ", formData);
+  addProjectToApp(formData);
 };
 
 const addCards = (items) => {
@@ -56,6 +57,14 @@ $(document).ready(function () {
   $("#formSubmit").click(() => {
     submitForm();
   });
-  addCards(cardList);
+
+  getProjects();
+  // addCards(cardList);
   $(".modal").modal();
 });
+
+const getProjects = () => {
+  $.get("/api/projects", (response) => {
+    if (response.statusCode == 200) addCards(response.data);
+  });
+};
